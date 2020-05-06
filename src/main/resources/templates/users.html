@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main.html">
+<div layout:fragment="title"><h2 th:text="#{users}"></h2></div>
+<div layout:fragment="myContent">
+    <script>
+        $('input[type="checkbox"]').on('change', function () {
+            $(this).siblings('input[type="checkbox"]').prop('checked', false);
+        });
+    </script>
+    <div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <div class="col-sm-12">
+            <table cellpadding="20" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th th:text="#{email}">
+                    </th>
+                    <th th:text="#{name}">
+                    </th>
+                    <th th:text="#{status}">
+                    </th>
+                    <th th:text="#{role}">
+                        ROLES
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usr : ${userList}">
+                    <td th:text="${usr.id}"></td>
+                    <td th:text="${usr.email}"></td>
+                    <td th:text="${usr.fullName}"></td>
+                    <td th:if="${usr.isActive == true}" th:text="#{active}"></td>
+                    <td th:unless="${usr.isActive == true}" th:text="#{not_active}"></td>
+                    <td th:each="role : ${usr.roles}" th:if="${role.role == 'ROLE_MODERATOR'}"><a th:text="#{moder}"></a></td>
+                    <td th:each="role : ${usr.roles}" th:if="${role.role == 'ROLE_USER'}"><a th:text="#{user}"></a></td>
+                    <td>
+                        <a th:href="@{'/user'+${usr.id}}" th:text="#{details}" style="color:black;"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+        <div class="col-sm-12">
+            <table cellpadding="20" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th th:text="#{email}">
+                    </th>
+                    <th th:text="#{name}">
+                    </th>
+                    <th th:text="#{status}">
+                    </th>
+                    <th>
+                        ROLES
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usr : ${moders}">
+                    <td th:text="${usr.id}"></td>
+                    <td th:text="${usr.email}"></td>
+                    <td th:text="${usr.fullName}"></td>
+                    <td th:text="${usr.isActive}"></td>
+                    <td th:each="role : ${usr.roles}" th:text="${role.role}"></td>
+                    <td>
+                        <a th:href="@{'/user'+${usr.id}}" th:text="#{details}" style="color:black;">DETAILS</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+    <h2 class="mt-50" th:text="#{add_user}"></h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <div id="second">
+                        <div class="myform form ">
+    <form th:action="@{'/addUser'}" method="post">
+        <div class="form-group">
+            <label th:text="#{name}">Full Name</label>
+            <input type="text"  name="name" class="form-control" id="firstname" aria-describedby="emailHelp" th:placeholder="#{name}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{surname}">Surname</label>
+            <input type="text"  name="surname" class="form-control" id="lastname" aria-describedby="emailHelp" th:placeholder="#{surname}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{email}">Email address</label>
+            <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" th:placeholder="#{email}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{password}">Password</label>
+            <input type="password" name="pass" id="password"  class="form-control" aria-describedby="emailHelp" th:placeholder="#{password}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{otchestvo}">Patronymic</label>
+            <input type="text" name="otchestvo"  class="form-control" aria-describedby="emailHelp" th:placeholder="#{otchestvo}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{IIN}">IIN</label>
+            <input type="text" name="IIN"   class="form-control" aria-describedby="emailHelp" th:placeholder="#{IIN}">
+        </div>
+        <div class="col-md-12 text-center mb-3">
+            <button type="submit" class=" btn btn-warning" th:text="#{add_user}">Add user</button>
+        </div>
+    </form>
+                        </div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

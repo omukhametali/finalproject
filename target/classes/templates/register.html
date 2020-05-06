@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main.html">
+
+<div layout:fragment="title"><h1 th:text="#{reg}"></h1></div>
+<div layout:fragment="myContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+    <div id="second">
+        <div class="myform form ">
+            <form th:action="@{'/register'}" method="post" name="registration">
+                <div class="form-group">
+                    <label th:text="#{name}">Full Name</label>
+                    <input type="text"  name="full_name" class="form-control" id="firstname" aria-describedby="emailHelp" th:placeholder="#{name}">
+                </div>
+                <div class="form-group">
+                    <label th:text="#{surname}">Surname</label>
+                    <input type="text"  name="surname" class="form-control" id="lastname" aria-describedby="emailHelp" th:placeholder="#{surname}">
+                </div>
+                <div class="form-group">
+                    <label th:text="#{email}">Email address</label>
+                    <input type="email" name="user_email"  class="form-control" id="email" aria-describedby="emailHelp" th:placeholder="#{email}">
+                </div>
+                <div class="form-group">
+                    <label th:text="#{password}">Password</label>
+                    <input type="password" name="user_password" id="password"  class="form-control" aria-describedby="emailHelp" th:placeholder="#{password}">
+                </div>
+                <div class="form-group">
+                    <label th:text="#{otchestvo}">Patronymic</label>
+                    <input type="text" name="otchestvo"  class="form-control" aria-describedby="emailHelp" th:placeholder="#{otchestvo}">
+                </div>
+                <div class="form-group">
+                    <label th:text="#{IIN}">IIN</label>
+                    <input type="text" name="IIN"   class="form-control" aria-describedby="emailHelp" th:placeholder="#{IIN}">
+                </div>
+                <div class="col-md-12 text-center mb-3">
+                    <button type="submit" class=" btn btn-warning">Get Started For Free</button>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="form-group">
+                        <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+            </div>
+        </div>
+</div>
+</div>
+</html>
